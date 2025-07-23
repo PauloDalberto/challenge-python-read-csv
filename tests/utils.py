@@ -1,15 +1,19 @@
-import csv
+from app.core.database import SessionLocal
+from app.repositories.movie_repository import get_winner_movies
 
-def load_winner_movies_from_csv():
-  with open("movies.csv", encoding="utf-8") as csvfile:
-    reader = csv.DictReader(csvfile, delimiter=';')
-    return [
-      {
-        "year": int(row["year"]),
-        "title": row["title"],
-        "studios": row["studios"],
-        "producers": row["producers"],
-        "winner": row["winner"].strip().lower() == "yes"
-      }
-      for row in reader if row["winner"].strip().lower() == "yes"
-    ]
+def load_winner_movies_from_db():
+  session = SessionLocal()
+  try:
+    movies = get_winner_movies(session)
+    result = []
+    for m in movies:
+      result.append({
+        "year": m.year,
+        "title": m.title,
+        "studios": m.studios,
+        "producers": m.producers,
+        "winner": m.winner,
+      })
+    return result
+  finally:
+    session.close()
