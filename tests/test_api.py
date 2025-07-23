@@ -1,13 +1,13 @@
 from fastapi.testclient import TestClient
 from collections import defaultdict
 import re
-from tests.utils import load_winner_movies_from_csv
+from tests.utils import load_winner_movies_from_db
 from main import app
 
 client = TestClient(app)
 
 def test_root_route_returns_winner_movies():
-  expected = load_winner_movies_from_csv()
+  expected = load_winner_movies_from_db()
   response = client.get("/")
 
   assert response.status_code == 200
@@ -20,15 +20,15 @@ def test_root_route_returns_winner_movies():
   assert expected_titles == api_titles
 
   if expected:
-    assert data[0]["year"] == expected[0]["year"]
-    assert data[0]["studios"] == expected[0]["studios"]
-    assert data[0]["producers"] == expected[0]["producers"]
-    assert data[0]["winner"] is True
+    assert data["year"] == expected["year"]
+    assert data["studios"] == expected["studios"]
+    assert data["producers"] == expected["producers"]
+    assert data["winner"] is True
 
 
 
 def test_producers_intervals_route():
-  winner_movies = load_winner_movies_from_csv()
+  winner_movies = load_winner_movies_from_db()
 
   producer_wins = defaultdict(list)
   for movie in winner_movies:
