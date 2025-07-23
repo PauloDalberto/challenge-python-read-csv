@@ -4,6 +4,7 @@ from app.core.database import SessionLocal
 
 def load_csv_to_db(csv_path: str):
     session = SessionLocal()
+
     try:
         with open(csv_path, encoding="utf-8") as csvfile:
             reader = csv.DictReader(csvfile, delimiter=';')
@@ -26,3 +27,4 @@ def load_csv_to_db(csv_path: str):
         raise
     finally:
         session.close()
+
