@@ -28,7 +28,7 @@ async def list_csv_files():
     if not files: 
       return {"message": "No csv files found in the folder."}
     
-    return {"files": files}
+    return files
   
   except Exception as e:
     return {"Error": f"Error listing files: {str(e)}"}

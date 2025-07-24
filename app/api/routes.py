@@ -16,7 +16,7 @@ def get_db():
   finally:
     db.close()
 
-@router.get("/", response_model=List[MovieSchema])
+@router.get("/winners", response_model=List[MovieSchema])
 def root(db: Session = Depends(get_db)):
   return get_winner_movies(db)
 
