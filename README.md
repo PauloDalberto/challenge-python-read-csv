@@ -1,30 +1,67 @@
-# API Oscar Pior Filme - Backend
+# Worst Movie Wins - Backend (FastAPI)
 
-API RESTful construída com **FastAPI** que lê um arquivo CSV de filmes, armazena os dados em um banco SQLite em memória, e expõe endpoints para analisar os produtores com os maiores e menores intervalos entre vitórias na categoria "Pior Filme".
+API desenvolvida em Python com FastAPI, responsável por processar arquivos CSV contendo dados de premiações de filmes e disponibilizar estatísticas relevantes sobre os vencedores.
 
----
+## Tecnologias Utilizadas
+ - Python 3.11+
+ - FastAPI
+ - Uvicorn
+ - Pydantic
+ - Pytest — Testes automatizados
+ - Banco em memória (sem uso de banco de dados externo)
+ - Arquitetura em camadas (layers)
 
-## Funcionalidades
+## Arquitetura em Camadas
+O projeto segue uma estrutura clara e escalável com separação por responsabilidades:
 
-- Carrega dados do arquivo CSV (`movies.csv`) na inicialização da aplicação
-- Armazena os dados em banco SQLite em memória usando SQLAlchemy ORM
-- Endpoint para obter produtores com intervalos mínimos e máximos entre prêmios consecutivos
-- Arquitetura organizada em camadas (models, services, repositories, etc.)
-- Testes de integração usando pytest e TestClient
+```
+├── app/
+│   ├── api
+│   ├── core
+│   ├── models
+│   ├── repositories
+│   ├── schemas
+│   ├── services
+│   └── utils
+├── csv/
+├── tests
+└── main.py
+```
 
----
+## Como Executar o Projeto
 
-## Começando
+### Passos
 
-### Requisitos
+1. Crie um ambiente virtual e ative-o
+```
+python -m venv venv
+source venv/bin/activate    # Linux/macOS
+.\venv\Scripts\activate     # Windows
+```
 
-- Python 3.9+
-- pip
+2. Instale as dependências
+```
+pip install -r requirements.txt
+```
 
-### Instalação
+3. Execute a API com Uvicorn
+```
+uvicorn main:app --reload
+```
 
-1. Clone o repositório:
+## Testes
 
-```bash
-git clone https://github.com/PauloDalberto/challenge-python-read-csv.git
+Padrão utilizado: AAA (Arrange, Act, Assert)
 
+Cada teste é dividido em três etapas:
+ - Arrange – configuração e preparação do teste
+ - Act – chamada da função ou endpoint
+ - Assert – verificação do resultado esperado
+
+Para rodar os testes automatizados, utilize o Pytest:
+```
+pytest 
+```
+Os testes cobrem os principais serviços e rotas, garantindo a qualidade do código.
+
+![alt text](image.png)
