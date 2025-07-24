@@ -3,12 +3,13 @@ from collections import defaultdict
 import re
 from tests.utils import load_winner_movies_from_db
 from main import app
+from unittest.mock import patch
 
 client = TestClient(app)
 
 def test_root_route_returns_winner_movies():
   expected = load_winner_movies_from_db()
-  response = client.get("/")
+  response = client.get("/winners")
 
   assert response.status_code == 200
   data = response.json()
@@ -79,3 +80,16 @@ def test_producers_intervals_route():
       i["followingWin"] == item["followingWin"]
       for i in data["max"]
     )
+
+def test_root_route_empty_database():
+  with patch('app.repositories.movie_repository.get_winner_movies', return_value=[]):
+    response = client.get("/winners")
+    assert response.status_code == 200
+    assert response.json() == [], "The route should return an empty list when there are no winning movies"
+
+def test_producers_intervals_empty_database():
+  with patch('app.repositories.movie_repository.get_winner_movies', return_value=[]):
+    response = client.get("/producers/intervals")
+    assert response.status_code == 200
+    assert response.json() == {"min": [], "max": []}, "The route should return empty min and max when there are no winning movies"
+
