@@ -28,6 +28,33 @@ O projeto segue uma estrutura clara e escalável com separação por responsabil
 └── main.py
 ```
 
+## Como a API funciona?
+
+### Listar CSVs disponíveis
+A API possui uma rota para retornar a lista de arquivos .csv disponíveis em uma pasta do projeto.
+
+Rota: GET /csv-files
+
+Retorno: Lista de nomes dos arquivos .csv encontrados.
+
+### Selecionar um CSV para importar
+Após selecionar um dos arquivos listados, a API irá ler o conteúdo e salvar os registros no banco de dados.
+
+Rota: POST /select-csv
+
+Body esperado:
+```
+{
+  "filename": "nome-do-arquivo.csv"
+}
+```
+A API irá:
+ - Validar o arquivo.
+ - Ler os dados.
+ - Inserir no banco.
+ - 
+Após isso, será possivel acessar todos os ganhadores e o intervalo entre os prêmios!
+
 ## Como Executar o Projeto
 
 ### Passos
@@ -65,3 +92,8 @@ pytest
 Os testes cobrem os principais serviços e rotas, garantindo a qualidade do código.
 
 ![alt text](image.png)
+
+## Deploy
+
+Esta API está hospedada na Render e disponível publicamente em:
+https://python-api-csv.onrender.com
